@@ -4,8 +4,8 @@ Technical Test - Aquariux
 
 ## Packages:
 
-1. Vite as frontend development build tool.
-2. React as frontend framework.
+1. Vite as frontend build tool.
+2. React Typescript as frontend framework.
 3. Tailwindcss as CSS framework.
 4. Heroicons as icons library.
 5. Auto-animate as animation library.
