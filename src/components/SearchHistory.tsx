@@ -1,6 +1,5 @@
 import { MagnifyingGlassIcon, TrashIcon } from "@heroicons/react/24/outline";
 import moment from "moment";
-import { MouseEventHandler } from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 import { WeatherType } from "../lib/interface";
@@ -24,24 +23,14 @@ const SearchHistory = ({
   // return if no data
   if (dataList.length <= 0) return <NoRecord />;
 
-  // animation
-  const [listRef] = useAutoAnimate<HTMLDivElement>();
-
   return (
-    <div ref={listRef}>
+    <div>
       {dataList.map((data, index) => {
         const number = index + 1;
         const { id, name, sys, time } = data;
         const { country } = sys;
         const displayTime = moment(time).format("HH:mm:ss A");
-        const key = id + index;
-
-        // search data
-        const handleSearch: MouseEventHandler = async (event) => {
-          event.preventDefault();
-
-          await handleGetWeather(name, country);
-        };
+        const key = id + time;
 
         return (
           <div
@@ -53,7 +42,7 @@ const SearchHistory = ({
               <p>{displayTime}</p>
               <MagnifyingGlassIcon
                 className={iconStyle}
-                onClick={handleSearch}
+                onClick={() => handleGetWeather(name, country)}
               />
               <TrashIcon
                 className={iconStyle}
@@ -65,6 +54,46 @@ const SearchHistory = ({
       })}
     </div>
   );
+
+  // return (
+  //   <div>
+  //     {dataList.length > 0 &&
+  //       dataList.map((data, index) => {
+  //         const number = index + 1;
+  //         const { id, name, sys, time } = data;
+  //         const { country } = sys;
+  //         const displayTime = moment(time).format("HH:mm:ss A");
+  //         const key = id + time;
+
+  //         // search data
+  //         const handleSearch: MouseEventHandler = async (event) => {
+  //           event.preventDefault();
+
+  //           await handleGetWeather(name, country);
+  //         };
+
+  //         return (
+  //           <div
+  //             className="flex justify-between items-center border-b-2 py-2"
+  //             key={key}
+  //           >
+  //             <p className="">{`${number}. ${name}, ${country}`}</p>
+  //             <div className="flex justify-end gap-2 items-center">
+  //               <p>{displayTime}</p>
+  //               <MagnifyingGlassIcon
+  //                 className={iconStyle}
+  //                 onClick={handleSearch}
+  //               />
+  //               <TrashIcon
+  //                 className={iconStyle}
+  //                 onClick={() => handleDeleteWeather(data)}
+  //               />
+  //             </div>
+  //           </div>
+  //         );
+  //       })}
+  //   </div>
+  // );
 };
 
 export default SearchHistory;
